@@ -1,9 +1,8 @@
-
 /**
  * The model for radar scan and accumulator
  * 
- * @author @gcschmit
- * @version 19 July 2014
+ * @author @Natalie Tse
+ * @version 12/16/15
  */
 public class Radar
 {
@@ -36,10 +35,8 @@ public class Radar
         // initialize the currentScan 2D array and the accumulator 2D array
         
         
-        //
-        // !!! add code here !!!
-        //
-        
+        this.currentScan= new boolean[rows][cols];  
+        this.accumulator= new int[rows][cols];
         
         // randomly set the location of the monster (can be explicity set through the
         //  setMonsterLocation method for the unit test
@@ -65,8 +62,37 @@ public class Radar
         
         
         //
-        // !!! add code here !!!
         //
+        //1.set all cells in the currentScan 2D array to false 
+        //using a for loop I went through each element in the 2D array curretnScan and set it to false.
+        for(int i=0; i<this.currentScan.length; i++) 
+        {
+            for(int j=0; j<this.currentScan[i].length; j++) 
+            {
+                this.currentScan[i][j]=false;
+            }    
+        }   
+        //2. set the location of the monster in the currentScan 2D array
+        //use the method setMonsterLocation and pass in the parameters of monsterLocationRow and monsterLocationCol
+        setMonsterLocation(monsterLocationRow,monsterLocationCol); 
+        //3. inject noise into the grid
+        //called method injectNoise
+        injectNoise(); 
+        //4.) update the accumulator 2D array based on the state of the currentScan 2D array
+        // using a for loop to go through each element in currentScan and if it is update the accumulator array
+        for(int i=0; i<this.currentScan.length; i++) 
+        {
+            for(int j=0;j<this.currentScan[i].length;j++) 
+            {
+                if(this.currentScan[i][j]==true)
+                {
+                    this.accumulator[i][j]+=1;
+                }    
+            }    
+        }    
+        // 5.)increment the numScans instance variable 
+        // updated the variable += 1
+        numScans+=1;
         
         
     }
@@ -82,7 +108,8 @@ public class Radar
     {
         // remember the row and col of the monster's location
         monsterLocationRow = row;
-        monsterLocationCol = col;
+        monsterLocationCol
+        = col;
         
         // update the radar grid to show that something was detected at the specified location
         currentScan[row][col] = true;
@@ -167,11 +194,26 @@ public class Radar
         // as a false positive.
         
         
+        // using a for loop to go through each element in the currentScan 2D array and setting a random variable to choose the random location of the
+        //monster
+        for(int i=0;i<currentScan.length; i++) 
+        {
+            for(int j=0; j<currentScan[i].length; j++) 
+            {
+                double number= Math.random();
+                if( number<=noiseFraction)
+                {
+                    this.currentScan[i][j]=true; 
+                }    
+                
+            }    
+        }    
         //
-        // !!! add code here !!!
+        // 
         //
         
         
     }
     
 }
+

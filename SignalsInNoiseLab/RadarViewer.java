@@ -1,10 +1,11 @@
 import javax.swing.JFrame;
+import java.util.Scanner; 
 
 /**
  * Class that contains the main method for the program and creates the frame containing the component.
  * 
- * @author @gcschmit
- * @version 19 July 2014
+ * @author @Natalie Tse
+ * @version 12/16/15
  */
 public class RadarViewer
 {
@@ -15,13 +16,21 @@ public class RadarViewer
     public static void main(String[] args) throws InterruptedException
     {
         // create the radar, set the monster location, and perform the initial scan
+      
         final int ROWS = 100;
         final int COLS = 100;
-        Radar radar = new Radar(ROWS, COLS);
+        
+        Radar radar= new Radar(ROWS,COLS);
         radar.setNoiseFraction(0.10);
-        radar.scan();
+        Scanner s= new Scanner(System.in); 
+        System.out.println("Enter a Monster row(1-100): "); 
+        int newmonsterRow= s.nextInt(); 
+        System.out.println("Enter a Monster col(1-100): ");
+        int newmonsterCol=s.nextInt(); 
+        radar.setMonsterLocation(newmonsterRow,newmonsterCol); 
         
         JFrame frame = new JFrame();
+        radar.scan(); 
         
         frame.setTitle("Signals in Noise Lab");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
